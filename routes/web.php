@@ -22,3 +22,7 @@ Route::get('set_active_profile/{id}', 'ProfileController@setActiveProfile');
 Route::post('/createPost', 'PostController@post');
 
 Route::post('/comment/{modelType}/{modelId}', 'CommentController@post');
+
+
+Route::post('/post/{postId}/comment', 'CommentController@postCreatePostComment');
+Route::post('/gallery/{galleryId}/comment', 'CommentController@postCreateGalleryComment');

@@ -21,12 +21,22 @@ class CommentController extends Controller
      */
     public function __construct(CommentService $commentService)
     {
-
         $this->commentService = $commentService;
     }
 
     public function post(Request $request, $modelType, $modelId)
     {
         $this->commentService->createForModelTypeById($modelType, $modelId, $request->comment, Auth::user()->profile_id);
+    }
+    
+    
+    public function postCreatePostComment(Request $request, $postId) 
+    {
+        $comment = $this->commentService->createPostComment(Auth::user()->profile(), $postId, $request->get('comment')); 
+    }
+
+    public function postCreateGalleryComment(Request $request, $galleryId) 
+    {
+        $comment = $this->commentService->createGalleryComment(Auth::user()->profile(), $galleryId, $request->get('comment'));
     }
 }

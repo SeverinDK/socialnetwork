@@ -16,13 +16,6 @@ class Comment extends Model
         'profile_id'
     ];
 
-    public static function createFromAttributes(array $attributes, $model)
-    {
-        $comment = Comment::create($attributes);
-        return $model->comments->save($comment);
-
-    }
-
     public function commentable()
     {
         return $this->morphTo();

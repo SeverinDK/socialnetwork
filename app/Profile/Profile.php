@@ -2,6 +2,7 @@
 
 namespace App\Profile;
 
+use App\Comment\Comment;
 use App\Gallery\Gallery;
 use App\Post\Post;
 use App\User\User;
@@ -78,8 +79,32 @@ class Profile extends Model
         return $this->morphMany(Gallery::class, 'galleryable');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function getFullName()
     {
         return $this->profileDetails->firstname . ' ' . $this->profileDetails->lastname;
+    }
+
+
+    /**
+     * @author Dennis Micky Jensen <dj@tattoodo.com>
+     *
+     * @param Comment $comment
+     * @param Model   $commentable
+     *
+     * @return Comment
+     */
+    public function comment(Comment $comment, Model $commentable)
+    {
+        $this->comments()->save($comment);
+        $commentable->save($comment);
+        return $comment;
     }
 }
