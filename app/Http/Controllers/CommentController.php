@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Comment\CommentService;
+use Auth;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
+class CommentController extends Controller
+{
+    /**
+     * @var CommentService
+     */
+    private $commentService;
+
+    /**
+     * CommentController constructor.
+     * @param CommentService $commentService
+     */
+    public function __construct(CommentService $commentService)
+    {
+
+        $this->commentService = $commentService;
+    }
+
+    public function post(Request $request, $modelType, $modelId)
+    {
+        $this->commentService->createForModelTypeById($modelType, $modelId, $request->comment, Auth::user()->profile_id);
+    }
+}
